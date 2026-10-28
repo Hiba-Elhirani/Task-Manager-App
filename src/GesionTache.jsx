@@ -1,0 +1,148 @@
+import { useState } from "react";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell, ResponsiveContainer } from "recharts";
+
+export default function Acceuil(){
+    const[inputTitle, setinputTitle] = useState("");
+    const[dateDebut, setdateDebut] = useState("");
+    const[dateFin, setdateFin] = useState("");
+    const[name, setinputName] = useState("");
+    const[tache, setTache] = useState([]);
+    const[statut, setStatut] = useState("");
+    const[editIndex, setEditIndex] = useState(null);
+
+
+    // Ajouter une nouvelle tache
+    const AjouterBtn = () => {
+        if (inputTitle === "" && dateDebut === "" && dateFin === "" && name === "" && statut === "") {
+            alert("Veuillez remplir tous les champs!");
+            return;
+        }
+
+    const nouvelleTache = {
+        text: inputTitle,
+        dateDebut: dateDebut,
+        dateFin: dateFin,
+        name: name,
+        statut: statut,
+    };
+
+    if (editIndex === null) {
+        setTache([...tache, nouvelleTache]);
+    } else {
+        setTache(tache.map((t, i) => i === editIndex ? nouvelleTache : t));
+        setEditIndex(null);
+    }
+
+        setinputTitle("");
+        setdateDebut("");
+        setdateFin("");
+        setinputName("");
+        setStatut("");
+    };
+    // Supprimer une tache
+    const suppTache = (index) => {
+        setTache(tache.filter((t, i) => i !== index));
+    };
+
+    //Modifier une tache 
+    const modifierTache = (index) =>{
+        const t = tache[index];
+        setinputTitle(t.text);
+        setdateDebut(t.dateDebut);
+        setdateFin(t.dateFin);
+        setinputName(t.name);
+        setStatut(t.statut);
+        setEditIndex(index)
+    }
+
+    const COULEURS = ["#EF9F27", "#378ADD", "#639922"];
+    // Data 
+    const data = [
+        { statut: "A Faire",  nombre: tache.filter(t => t.statut === "A Faire").length },
+        { statut: "En Cours", nombre: tache.filter(t => t.statut === "En Cours").length },
+        { statut: "Termine",  nombre: tache.filter(t => t.statut === "Termine").length }
+    ]
+    return(
+        <>
+            <div className="container">
+                <h1>GESTION DES TACHES</h1>
+                <div className="Inputbox">
+                    <div className="champ">
+                        <label>Tâche</label>
+                        <input className="input" type="text" value={inputTitle} placeholder="Saisir votre tache" onChange={(e) => setinputTitle(e.target.value)}/>
+                    </div>
+                    <div className="champ">
+                        <label>Date début</label>
+                        <input className="input" type="date" value={dateDebut} onChange={(e) => setdateDebut(e.target.value)}/>
+                    </div>
+                    <div className="champ">
+                        <label>Date fin</label>
+                        <input className="input" type="date" value={dateFin} onChange={(e) => setdateFin(e.target.value)}/>
+                    </div>
+                    <div className="champ">
+                        <label>Nom</label>
+                        <input className="input" type="text" value={name} placeholder="Saisir votre Nom" onChange={(e) => setinputName(e.target.value)}/>
+                    </div>
+                    <div className="champ">
+                        <label>Statut</label>
+                        <select value={statut} onChange={(e) => setStatut(e.target.value)}>
+                            <option value="A Faire">A Faire</option>
+                            <option value="En Cours">En Cours</option>
+                            <option value="Termine">Termine</option>
+                        </select>
+                    </div>
+                    <button className="mainBtn" onClick={AjouterBtn}>Ajouter</button>
+                </div>
+                <div className="content">
+                    <div className="tableau">
+                        <table border={1}>
+                            <tr>
+                                <th>TACHES</th>
+                                <th>DATE DEBUT</th>
+                                <th>DATE FIN</th>
+                                <th>NOM</th>
+                                <th>STATUT</th>
+                                <th>ACTION</th>
+                            </tr>
+                                {tache.map((t, index) => (
+                                    <tr key = {index}>
+                                        <td style={{textDecoration: t.statut == "Termine" ? "line-through" : "none"}}>
+                                            {t.text}
+                                        </td>
+                                        <td>{t.dateDebut}</td>
+                                        <td>{t.dateFin}</td>
+                                        <td>{t.name}</td>
+                                        <td>{t.statut}</td>
+                                        <td>
+                                        <button className="btn" onClick={() => suppTache(index)}>Supprimer</button>
+                                        <button className="btn" onClick={() => modifierTache(index)}>Modifier</button>
+                                        </td>
+                                    </tr>
+                                ))}
+                        </table>
+                    </div>
+                    <div className="charts">
+                        <p className="chart-titre">Taches par statut</p>
+                        <div className="chart-zone">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart data={data}>
+                                    <XAxis dataKey="statut" stroke="#555" tick={{ fill: "#b5b5c5", fontSize: 12 }} tickLine={false} />
+                                    <YAxis stroke="#555" tick={false} tickLine={false} allowDecimals={false} />
+                                    <Tooltip
+                                        contentStyle={{ background: "#0b0b1a", border: "1px solid #2a2a40", color: "#fff" }}
+                                        cursor={{ fill: "rgba(255,255,255,0.05)" }}/>
+                                    <Bar dataKey="nombre" radius={[4, 4, 0, 0]}>
+                                        {data.map((d, i) => (
+                                            <Cell key={i} fill={COULEURS[i]} />
+                                        ))}
+                                    </Bar>
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </div>
+                </div>
+                </div>
+            </div>
+
+        </>
+    )
+} 

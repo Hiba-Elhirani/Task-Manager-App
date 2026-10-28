@@ -1,0 +1,167 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+body {
+  background-color: #0f0c29;
+  color: #fff;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-direction: column;
+}
+.container h1 {
+  font-size: 2.5rem;
+  margin: 30px;
+  font-weight: 500;
+}
+
+.Inputbox {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: flex-end;
+  min-width: 75%;
+  padding: 15px;
+  border: 1px solid #818181;
+  border-radius: 10px;
+  background-color: #09071f;
+}
+.Inputbox .champ {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.Inputbox .champ label {
+    font-size: 12px;
+    color: #b5b5c5;
+}
+
+.Inputbox .input,
+.Inputbox select {
+    color: #fff;
+    background-color: #0b0b1a;
+    border: 1px solid #555;
+    padding: 10px;
+    border-radius: 6px;
+}
+.Inputbox input::placeholder {
+    color: #999;
+}
+.Inputbox input[type="date"] {
+    color-scheme: dark;
+}
+.Inputbox select option {
+    background: #0b0b1a;
+    color: #fff;
+}
+.mainBtn {
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 600;
+    padding: 10px 25px;
+    margin: 0 3px;
+    cursor: pointer;
+    background-color: #2f78d6;
+}
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-top: 30px;
+  min-width: 800px;
+}
+.tableau {
+    border: 1px solid #2a2a40;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #0b0b1a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tableau table {
+    width: 100%;
+    border: none;
+    border-collapse: collapse;
+    color: #fff;
+}
+
+.tableau th {
+    background-color: #2f78d6;
+    color: #fff;
+    padding: 12px 8px;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    border: none;
+}
+
+.tableau td {
+    padding: 12px 8px;
+    text-align: center;
+    font-size: 14px;
+    border: none;
+    border-top: 1px solid #2a2a40;
+}
+
+.tableau tr:hover td {
+    background-color: #15152b;
+}
+
+.tableau .btn {
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px;
+    margin: 0 3px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.tableau .btn:first-child {
+    background-color: #ef4444;
+}
+
+.tableau .btn:last-child {
+    background-color: #3b82f6;
+}
+
+.tableau .btn:hover {
+    opacity: 0.85;
+}
+.charts {
+    width: 400px;
+    height: 300px;
+    padding: 12px;
+    background-color: #0b0b1a;
+    border: 1px solid #2a2a40;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-titre {
+    text-align: center;
+    font-size: 14px;
+    color: #b5b5c5;
+    margin-bottom: 8px;
+}
+
+.chart-zone {
+    flex: 1;
+    min-height: 0;
+}
