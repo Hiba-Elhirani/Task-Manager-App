@@ -1,36 +1,36 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: sans-serif;
-}
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    }
 body {
-  background-color: #0f0c29;
-  color: #fff;
+    background-color: #0f0c29;
+    color: #fff;
 }
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-direction: column;
 }
 .container h1 {
-  font-size: 2.5rem;
-  margin: 30px;
-  font-weight: 500;
+    font-size: 2.5rem;
+    margin: 30px;
+    font-weight: 500;
 }
 
 .Inputbox {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  align-items: flex-end;
-  min-width: 75%;
-  padding: 15px;
-  border: 1px solid #818181;
-  border-radius: 10px;
-  background-color: #09071f;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: flex-end;
+    min-width: 75%;
+    padding: 15px;
+    border: 1px solid #818181;
+    border-radius: 10px;
+    background-color: #09071f;
 }
 .Inputbox .champ {
     display: flex;
@@ -49,7 +49,7 @@ body {
     background-color: #0b0b1a;
     border: 1px solid #555;
     padding: 10px;
-    border-radius: 6px;
+    border-radius: 10px;
 }
 .Inputbox input::placeholder {
     color: #999;
@@ -74,12 +74,37 @@ body {
     background-color: #2f78d6;
 }
 .content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-  margin-top: 30px;
-  min-width: 800px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    gap: 15px;
+    margin-top: 30px;
+    min-width: 800px;
+}
+.tableContent {
+    border: 1px solid #363333;
+    border-radius: 10px;
+    padding: 15px 20px;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+.inputContent {
+    display: flex;
+    gap: 10px;
+} 
+.tableContent .inputContent label {
+    font-size: 12px;
+    color: #b5b5c5;
+    margin-top: 10px;
+}
+.tableContent .inputContent .input {
+    border: 1px solid #555;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #fff;
+    background-color: #0b0b1a;
 }
 .tableau {
     border: 1px solid #2a2a40;
@@ -164,4 +189,35 @@ body {
 .chart-zone {
     flex: 1;
     min-height: 0;
+}
+.content2 {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+.content2 .taskNbr,
+.content2 .overdueTask{
+    width: 350px;
+    border: 1px solid #363333;
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    margin: 15px;
+}
+.content2 .taskNbr h2 {
+    font-size: 25px;
+    font-weight: 500;
+}
+.content2 .taskNbr span {
+    color: #3b82f6;
+    font-size: 30px;
+    font-weight: 600;
+}
+.content2 .overdueTask span {
+    color: #ef4444;
+    font-size: 30px;
+    font-weight: 600;
 }

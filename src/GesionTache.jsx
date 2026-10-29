@@ -7,13 +7,14 @@ export default function Acceuil(){
     const[dateFin, setdateFin] = useState("");
     const[name, setinputName] = useState("");
     const[tache, setTache] = useState([]);
-    const[statut, setStatut] = useState("");
+    const[statut, setStatut] = useState("A Faire");
     const[editIndex, setEditIndex] = useState(null);
+    const[search, setSearch] = useState("");
 
 
     // Ajouter une nouvelle tache
     const AjouterBtn = () => {
-        if (inputTitle === "" && dateDebut === "" && dateFin === "" && name === "" && statut === "") {
+        if (inputTitle === "" || dateDebut === "" || dateFin === "" || name === "" || statut === "") {
             alert("Veuillez remplir tous les champs!");
             return;
         }
@@ -32,12 +33,11 @@ export default function Acceuil(){
         setTache(tache.map((t, i) => i === editIndex ? nouvelleTache : t));
         setEditIndex(null);
     }
-
         setinputTitle("");
         setdateDebut("");
         setdateFin("");
         setinputName("");
-        setStatut("");
+        setStatut("A Faire");
     };
     // Supprimer une tache
     const suppTache = (index) => {
@@ -54,7 +54,12 @@ export default function Acceuil(){
         setStatut(t.statut);
         setEditIndex(index)
     }
-
+    const tachesFilter = tache.filter((t) => t.text.toLowerCase().includes(search.toLowerCase()));
+    const totaleTache = tache.reduce((acc) => acc + 1,0 );
+    const aujourdhui = new Date().toLocaleDateString("en-CA");
+    // retourne les tache en retard
+    const estEnRetard = (t) => t.dateFin !== "" && t.dateFin < aujourdhui && t.statut !== "Termine";
+    const nbRetard = tache.reduce((acc, t) => estEnRetard(t) ? acc + 1 : acc, 0);
     const COULEURS = ["#EF9F27", "#378ADD", "#639922"];
     // Data 
     const data = [
@@ -63,13 +68,13 @@ export default function Acceuil(){
         { statut: "Termine",  nombre: tache.filter(t => t.statut === "Termine").length }
     ]
     return(
-        <>
+        <>     
             <div className="container">
                 <h1>GESTION DES TACHES</h1>
                 <div className="Inputbox">
                     <div className="champ">
                         <label>Tâche</label>
-                        <input className="input" type="text" value={inputTitle} placeholder="Saisir votre tache" onChange={(e) => setinputTitle(e.target.value)}/>
+                        <input className="input" type="text" value={inputTitle} placeholder="Saisir votre tache..." onChange={(e) => setinputTitle(e.target.value)}/>
                     </div>
                     <div className="champ">
                         <label>Date début</label>
@@ -80,8 +85,8 @@ export default function Acceuil(){
                         <input className="input" type="date" value={dateFin} onChange={(e) => setdateFin(e.target.value)}/>
                     </div>
                     <div className="champ">
-                        <label>Nom</label>
-                        <input className="input" type="text" value={name} placeholder="Saisir votre Nom" onChange={(e) => setinputName(e.target.value)}/>
+                        <label>Ressource</label>
+                        <input className="input" type="text" value={name} placeholder="Saisir votre Nom..." onChange={(e) => setinputName(e.target.value)}/>
                     </div>
                     <div className="champ">
                         <label>Statut</label>
@@ -94,32 +99,40 @@ export default function Acceuil(){
                     <button className="mainBtn" onClick={AjouterBtn}>Ajouter</button>
                 </div>
                 <div className="content">
-                    <div className="tableau">
-                        <table border={1}>
-                            <tr>
-                                <th>TACHES</th>
-                                <th>DATE DEBUT</th>
-                                <th>DATE FIN</th>
-                                <th>NOM</th>
-                                <th>STATUT</th>
-                                <th>ACTION</th>
-                            </tr>
-                                {tache.map((t, index) => (
-                                    <tr key = {index}>
-                                        <td style={{textDecoration: t.statut == "Termine" ? "line-through" : "none"}}>
-                                            {t.text}
-                                        </td>
-                                        <td>{t.dateDebut}</td>
-                                        <td>{t.dateFin}</td>
-                                        <td>{t.name}</td>
-                                        <td>{t.statut}</td>
-                                        <td>
-                                        <button className="btn" onClick={() => suppTache(index)}>Supprimer</button>
-                                        <button className="btn" onClick={() => modifierTache(index)}>Modifier</button>
-                                        </td>
-                                    </tr>
-                                ))}
-                        </table>
+                    <div className="tableContent">
+                        <div className="inputContent">
+                            <label>Rechercher Votre Tache: </label>
+                            <input className="input" type="search" value={search} placeholder="..."onChange={(e) => setSearch(e.target.value)}/>
+                        </div>
+                        <div className="tableau">
+                            <table border={1}>
+                                <tr>
+                                    <th>TACHES</th>
+                                    <th>DATE DEBUT</th>
+                                    <th>DATE FIN</th>
+                                    <th>Ressource</th>
+                                    <th>STATUT</th>
+                                    <th>ACTION</th>
+                                </tr>
+                                    {tachesFilter.map((t, index) => (
+                                        <tr key = {index}>
+                                            <td style={{textDecoration: t.statut == "Termine" ? "line-through" : "none"}}>
+                                                {t.text}
+                                            </td>
+                                            <td>{t.dateDebut}</td>
+                                            <td>{t.dateFin}</td>
+                                            <td>{t.name}</td>
+                                            <td style={{ color: estEnRetard(t) ? "#ef4444" : "inherit"}}>
+                                                {t.statut}
+                                            </td>
+                                            <td>
+                                            <button className="btn" onClick={() => suppTache(index)}>Supprimer</button>
+                                            <button className="btn" onClick={() => modifierTache(index)}>Modifier</button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                            </table>
+                        </div>
                     </div>
                     <div className="charts">
                         <p className="chart-titre">Taches par statut</p>
@@ -139,7 +152,17 @@ export default function Acceuil(){
                                 </BarChart>
                             </ResponsiveContainer>
                         </div>
+                    </div>
                 </div>
+                <div className="content2">
+                    <div className="taskNbr">
+                        <h2>Nombre Total des Taches:</h2>
+                        <span>{totaleTache}</span>
+                    </div>
+                    <div className="overdueTask">
+                        <h2>Nombre Total des Taches:</h2>
+                        <span>{nbRetard}</span>
+                    </div>
                 </div>
             </div>
 
