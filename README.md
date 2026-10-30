@@ -9,8 +9,9 @@ Application web de **gestion des tâches** développée avec React. Elle permet 
 - Supprimer une tâche
 - Trois statuts : **A Faire**, **En Cours**, **Termine**
 - Tâches terminées barrées dans le tableau
+- Saisir un mot dans la barre de recherche pour afficher uniquement les tâches correspondantes
 - Graphique en barres (Recharts) mis à jour automatiquement
-- Interface sombre et responsive
+- Interface sombre
 
 ## Technologies
 
@@ -61,7 +62,9 @@ Task-Manager-App/
 2. Cliquer sur **Ajouter** : la tâche apparaît dans le tableau.
 3. Cliquer sur **Modifier** pour reprendre les données d'une tâche, les changer, puis valider.
 4. Cliquer sur **Supprimer** pour retirer une tâche.
-5. Le graphique à droite se met à jour à chaque changement.
+5. Saisir un mot dans la barre de recherche pour afficher uniquement les tâches correspondantes.
+6. Consulter le nombre total de tâches et le nombre de tâches en retard (leur statut s'affiche en rouge).
+7. Le graphique à droite se met à jour à chaque changement.
 
 ## Auteur
 
