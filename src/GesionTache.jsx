@@ -1,22 +1,30 @@
 import { useState } from "react";
+import { useLocalStorage } from "@uidotdev/usehooks";
+
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell, ResponsiveContainer } from "recharts";
 
 export default function Acceuil(){
+
     const[inputTitle, setinputTitle] = useState("");
     const[dateDebut, setdateDebut] = useState("");
     const[dateFin, setdateFin] = useState("");
     const[name, setinputName] = useState("");
-    const[tache, setTache] = useState([]);
+    const[tache, setTache] = useLocalStorage("Tache", []);
     const[statut, setStatut] = useState("A Faire");
     const[editIndex, setEditIndex] = useState(null);
     const[search, setSearch] = useState("");
-
-
+     //Store data
+    
     // Ajouter une nouvelle tache
     const AjouterBtn = () => {
         if (inputTitle === "" || dateDebut === "" || dateFin === "" || name === "" || statut === "") {
             alert("Veuillez remplir tous les champs!");
             return;
+        }
+        if (dateFin <= dateDebut){
+            setTache([...tache, nouvelleTache]);
+        }else {
+            alert("La date de fin doit être supérieure à la date de début.")
         }
 
     const nouvelleTache = {
@@ -57,9 +65,10 @@ export default function Acceuil(){
     const tachesFilter = tache.filter((t) => t.text.toLowerCase().includes(search.toLowerCase()));
     const totaleTache = tache.reduce((acc) => acc + 1,0 );
     const aujourdhui = new Date().toLocaleDateString("en-CA");
-    // retourne les tache en retard
+    //Retourne les tache en retard
     const estEnRetard = (t) => t.dateFin !== "" && t.dateFin < aujourdhui && t.statut !== "Termine";
     const nbRetard = tache.reduce((acc, t) => estEnRetard(t) ? acc + 1 : acc, 0);
+    // Colors for charts
     const COULEURS = ["#EF9F27", "#378ADD", "#639922"];
     // Data 
     const data = [
